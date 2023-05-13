@@ -1,0 +1,21 @@
+What is your first and last name?
+  [Unknown]:  Moofer Agent
+What is the name of your organizational unit?
+  [Unknown]:  15
+What is the name of your organization?
+  [Unknown]:  Synram Technolab
+What is the name of your City or Locality?
+  [Unknown]:  Gwalior
+What is the name of your State or Province?
+  [Unknown]:  MP
+What is the two-letter country code for this unit?
+  [Unknown]:  IN
+Is CN=Moofer Agent, OU=15, O=Synram Technolab, L=Gwalior, ST=MP, C=IN correct?
+  [no]:  yes
+
+Generating 2,048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 10,000 days
+        for: CN=Moofer Agent, OU=15, O=Synram Technolab, L=Gwalior, ST=MP, C=IN
+Enter key password for <mooferagent>
+        (RETURN if same as keystore password): Synram@125
+Re-enter new password: Synram@125
+[Storing mooferagentjks.keystore] Synram@125
