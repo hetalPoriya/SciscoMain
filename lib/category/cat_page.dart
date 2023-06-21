@@ -1,4 +1,5 @@
 import 'package:ars_progress_dialog/ars_progress_dialog.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -13,6 +14,7 @@ import 'package:scisco/category/cat_by_supercat.dart';
 import 'package:scisco/models/CategoriesListDatum.dart';
 import 'package:scisco/models/CategoriesListModel.dart';
 import 'package:scisco/models/ProductsList.dart';
+import 'package:scisco/models/SliderModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import '../Api/BaseApi.dart';
@@ -27,6 +29,7 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   List<CategoriesListDatum> categoriesList = List();
+  List<ListElement> sliderList = List();
   SharedPreferences prefs;
   List<ProductsList> selectedProducts = new List();
 
@@ -63,6 +66,7 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         title: Text(
           "GLASMIC",
           style: TextStyle(
@@ -133,12 +137,33 @@ class _CategoryPageState extends State<CategoryPage> {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image(
-                image: AssetImage("assets/images/medical_equipment.jpg"),
+            child:   Container(
+              height: 150.0,
+              child: Card(
+                semanticContainer: true,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                elevation: 0.7,
+                child: CarouselSlider(
+                  options: CarouselOptions(
+
+                      autoPlay: true,
+
+                      viewportFraction: 1.0,
+
+                  ),
+                  items:List.generate(sliderList.length, (index) =>  Image.network(sliderList[index].image,height: 200,fit: BoxFit.fill,isAntiAlias: true,))
+
+                ),
               ),
             ),
+            // child: ClipRRect(
+            //   borderRadius: BorderRadius.circular(20),
+            //   child: Image(
+            //     image: AssetImage("assets/images/medical_equipment.jpg"),
+            //   ),
+           // ),
           ),
           Padding(
               padding: EdgeInsets.only(bottom: 0, left: 5, right: 5),
@@ -254,6 +279,7 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   Future<Response> getCategoriesList() async {
+    await sliderApi();
     bool isDeviceOnline = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // bool isDeviceOnline = await checkConnection();
@@ -287,6 +313,54 @@ class _CategoryPageState extends State<CategoryPage> {
             });
           } else {
             String errorMsg = categoreisListModel.error_msg;
+          }
+        }
+
+        return response;
+      } catch (e) {
+        print("RESPONSE NEwBooking:" + e.toString());
+        progressDialog.dismiss();
+
+        displayToast("Something went wrong", context);
+        return null;
+      }
+    } else {
+      displayToast("Please connect to internet", context);
+      return null;
+    }
+  }
+
+  Future<Response> sliderApi() async {
+    bool isDeviceOnline = true;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // bool isDeviceOnline = await checkConnection();
+    if (isDeviceOnline) {
+      ArsProgressDialog progressDialog = ArsProgressDialog(context,
+          blur: 2,
+          backgroundColor: Color(0x33000000),
+          animationDuration: Duration(milliseconds: 500));
+
+      progressDialog.show();
+      try {
+        BaseApi baseApi = new BaseApi();
+        Response response =
+        await baseApi.dio.get(sliderUrl);
+        progressDialog.dismiss();
+
+        if (response != null) {
+          // List<dynamic> body = jsonDecode(response.data);
+
+          final parsed = json.decode(response.data).cast<String, dynamic>();
+          print("RESPOONSE:" + parsed.toString());
+
+          var slider = SliderModel.fromMap(parsed);
+
+          if (slider.error == "1") {
+            setState(() {
+              sliderList = slider.list;
+            });
+          } else {
+            String errorMsg = slider.errorMsg;
           }
         }
 

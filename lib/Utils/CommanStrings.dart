@@ -3,6 +3,7 @@
 String BASE_URL = "https://glasmic.com/admin/";
 String ASSET_URL = "https://glasmic.com/admin/";
 
+String sliderUrl = "app_api/slider_api";
 String registerSubUrl = "app_api/signup_api";
 String loginSubUrl = "app_api/login_api";
 String submitUserKyc = "app_api/User_kyc";
@@ -68,7 +69,7 @@ String customer_registrationUrl = "app-api/customer-registration";
 String get_all_near_driver_bycustomerUrl =
     "app-api/get_all_near_driver_bycustomer";
 String logoutSubUrl = "auth/logout";
-String sliderUrl = "App_api/banner";
+//String sliderUrl = "App_api/banner";
 String product_detailsUrl = "App_api/product_details";
 String addtocardUrl = "App_api/addtocard";
 String profiledataUrl = "App_api/profiledata";

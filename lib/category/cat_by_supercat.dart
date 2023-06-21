@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 import 'package:dio/dio.dart';
@@ -224,7 +225,7 @@ class _CategoryBySuperCategoryState extends State<CategoryBySuperCategory> {
       progressDialog.show();
       try {
         BaseApi baseApi = new BaseApi();
-        print('GET ID $id');
+        log('GET ID $id');
         var body = json.encode({
           "supercategory": id,
         });

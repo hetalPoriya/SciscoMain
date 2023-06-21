@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:ars_progress_dialog/ars_progress_dialog.dart';
-import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -13,12 +13,18 @@ import 'package:universal_platform/universal_platform.dart';
 
 import 'LoginSignup/Login/login_screen.dart';
 import 'LoginSignup/Welcome/welcome_screen.dart';
-import 'Utils/CommonLogic.dart';
-import 'navigation_home_screen.dart';
+
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  HttpOverrides.global =  MyHttpOverrides();
   await Firebase.initializeApp();
 
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
