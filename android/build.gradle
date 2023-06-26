@@ -2,7 +2,7 @@ buildscript {
     ext.kotlin_version = "1.6.10"
     repositories {
         google()
-        jcenter()
+
         mavenCentral()
         maven {
             // [required] background_fetch
@@ -11,17 +11,16 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.1'
+        classpath 'com.android.tools.build:gradle:7.0.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         //classpath 'com.google.gms:google-services:4.3.2'
-        classpath 'com.google.gms:google-services:4.3.15'
+        classpath 'com.google.gms:google-services:4.3.4'
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
         maven {
             // [required] background_fetch
             url "${project(':background_fetch').projectDir}/libs"
@@ -40,4 +39,10 @@ subprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'androidx.core:core-ktx:1.6.0'
+    }
 }

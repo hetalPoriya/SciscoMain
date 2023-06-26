@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
@@ -518,7 +519,8 @@ class _detailProdukState extends State<detailProduk> {
                                     side: BorderSide(color: Colors.white)),
                                 onPressed: () async {
                                   setState(() {
-                                    product.quantity = 1;
+                                    log('A  ${product}');
+                                   if(product != null) product.quantity = 1;
                                     selectedProducts.add(product);
 
                                     prefs.setString(
